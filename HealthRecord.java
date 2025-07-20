@@ -9,12 +9,11 @@ public class HealthRecord {
     private static int shortestHieght = MAX_PERMITTED_HEIGHT;
 
     // New fields for average and count
-    private static int counter = 0;           // Number of HealthRecord objects
-    private static double averageHeight = 0;  // Average height of all objects
+    private static int counter = 0;           
+    private static double averageHeight = 0;  
 
     public HealthRecord(int height) { // constructor
-        setHeight(height); // calls the setter method
-        // Counter and average are updated in setHeight
+        setHeight(height);
     }
 
     public int getHeight() { // getter
@@ -57,4 +56,24 @@ public class HealthRecord {
     public static double getAverageHeight() {
         return averageHeight;
     }
+
+    public static void printBMICategory(double bmi) {
+        if (bmi < 18.5) {
+            System.out.println("Underweight (BMI < 18.5)");
+        } else if (bmi < 23.0) {
+            System.out.println("Normal weight (BMI 18.5–22.9)");
+        } else if (bmi < 25.0) {
+            System.out.println("Overweight at risk (BMI 23.0–24.9)");
+        } else if (bmi < 30.0) {
+            System.out.println("Obese Class I (BMI 25.0–29.9)");
+        } else {
+            System.out.println("Obese Class II (BMI ≥ 30)");
+        }
+    }
+
+    public static double calculateBMI(double weightKg, double heightCm) {
+        double heightM = heightCm / 100.0;
+        return weightKg / (heightM * heightM);
+    }
+
 }
