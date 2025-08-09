@@ -1,26 +1,29 @@
 public class HealthRecord {
     private int height;
-    private static final int MIN_PERMITTED_HEIGHT = 50; // constant
-    private static final int MAX_PERMITTED_HEIGHT = 175; // constant
-    private static final int DEFAULT_HEIGHT = 100;
+    private static final int MIN_PERMITTED_HEIGHT = 50; // Minimum height in cm
+    private static final int MAX_PERMITTED_HEIGHT = 175; // Maximum height in cm
+    private static final int DEFAULT_HEIGHT = 100;       // Default height if invalid
 
-    // Tallest and shortest tracking
+    
     private static int tallestHeight = MIN_PERMITTED_HEIGHT;
-    private static int shortestHieght = MAX_PERMITTED_HEIGHT;
+    private static int shortestHeight = MAX_PERMITTED_HEIGHT;
 
-    // New fields for average and count
-    private static int counter = 0;           
-    private static double averageHeight = 0;  
+    
+    private static int counter = 0;
+    private static double averageHeight = 0;
 
-    public HealthRecord(int height) { // constructor
+    
+    public HealthRecord(int height) {
         setHeight(height);
     }
 
-    public int getHeight() { // getter
+    // This gets the height for this record.
+    public int getHeight() {
         return this.height;
     }
 
-    public void setHeight(int height) { // setter
+    // This sets the height for this record and updates the average and counter.
+    public void setHeight(int height) {
         int validatedHeight;
         if (height >= MIN_PERMITTED_HEIGHT && height <= MAX_PERMITTED_HEIGHT) {
             validatedHeight = height;
@@ -28,6 +31,7 @@ public class HealthRecord {
             validatedHeight = DEFAULT_HEIGHT;
         }
 
+        // Update the average height
         averageHeight = (averageHeight * counter + validatedHeight) / (counter + 1);
         counter++;
 
@@ -36,27 +40,30 @@ public class HealthRecord {
         if (this.height > tallestHeight) {
             tallestHeight = this.height;
         }
-        if (this.height < shortestHieght) {
-            shortestHieght = this.height;
+        if (this.height < shortestHeight) {
+            shortestHeight = this.height;
         }
     }
 
+    // This shows the details for this record.
     public void displayDetails() {
         System.out.println("Height: (cm) " + getHeight());
     }
 
+    // This shows the tallest, shortest, average height, and number of records.
     public static void displayClassDetails() {
         System.out.println("Tallest Height: (cm) " + tallestHeight);
-        System.out.println("Shortest Height: (cm) " + shortestHieght);
+        System.out.println("Shortest Height: (cm) " + shortestHeight);
         System.out.printf("Average Height: (cm) %.2f\n", getAverageHeight());
         System.out.println("Number of Records: " + counter);
     }
 
-    // Getter for average height
+    // This gets the average height of all records.
     public static double getAverageHeight() {
         return averageHeight;
     }
 
+    // This prints the BMI category.
     public static void printBMICategory(double bmi) {
         if (bmi < 18.5) {
             System.out.println("Underweight (BMI < 18.5)");
@@ -71,9 +78,9 @@ public class HealthRecord {
         }
     }
 
+    // This calculates BMI using weight (kg) and height (cm).
     public static double calculateBMI(double weightKg, double heightCm) {
         double heightM = heightCm / 100.0;
         return weightKg / (heightM * heightM);
     }
-
 }
